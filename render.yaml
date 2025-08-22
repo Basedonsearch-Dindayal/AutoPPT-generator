@@ -1,0 +1,17 @@
+# Render.com configuration file
+# This file tells Render how to build and run your Node.js backend
+
+# Build command (if needed)
+# buildCommand: npm install
+
+# Start command
+# startCommand: node server.js
+
+# Node.js version
+# nodeVersion: 18
+
+# Environment: production
+# region: oregon (or your preferred region)
+
+# Health check endpoint: /health
+# Port: 5000 (Render will override with $PORT)

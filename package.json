@@ -11,7 +11,7 @@
     "start:backend": "NODE_ENV=production node server.js",
     "start:production": "concurrently \"npm run start\" \"npm run start:backend\"",
     "deploy:vercel": "vercel --prod",
-    "deploy:railway": "railway deploy"
+    "deploy:render": "git push origin main"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

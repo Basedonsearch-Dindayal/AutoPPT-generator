@@ -1,36 +1,47 @@
 # 🚀 Free Deployment Guide - AutoPPT Generator
 
-## Best Free Option: Vercel + Railway
+## Best Free Option: Vercel + Render
 
 **Total Cost: $0/month**
 - ✅ Vercel (Frontend): Free forever for personal projects
-- ✅ Railway (Backend): $5 credit monthly (enough for small apps)
+- ✅ Render (Backend): 750 hours/month free (enough for personal projects)
 
 ---
 
 ## 🎯 Step-by-Step Deployment
 
-### Part 1: Deploy Backend to Railway
+### Part 1: Deploy Backend to Render
 
-1. **Sign up at Railway**
-   - Go to [railway.app](https://railway.app)
+1. **Sign up at Render**
+   - Go to [render.com](https://render.com)
    - Sign up with GitHub
 
-2. **Create new project**
-   - Click "New Project" → "Deploy from GitHub repo"
+2. **Create new Web Service**
+   - Click "New +" → "Web Service"
+   - Connect your GitHub repository
    - Select your AutoPPT-generator repository
 
-3. **Set environment variables**
+3. **Configure the service**
+   ```
+   Name: autoppt-backend (or your choice)
+   Branch: main
+   Runtime: Node
+   Build Command: npm install
+   Start Command: node server.js
+   ```
+
+4. **Set environment variables**
    ```
    GEMINI_API_KEY=your_actual_api_key
    NODE_ENV=production
-   PORT=5000
+   PORT=10000
    FRONTEND_URL=https://your-app.vercel.app
    ```
 
-4. **Deploy**
-   - Railway will auto-deploy
-   - Note your backend URL: `https://your-app.railway.app`
+5. **Deploy**
+   - Click "Create Web Service"
+   - Render will auto-deploy
+   - Note your backend URL: `https://your-app.onrender.com`
 
 ### Part 2: Deploy Frontend to Vercel
 
