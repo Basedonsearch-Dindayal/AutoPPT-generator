@@ -1,0 +1,31 @@
+# Ignore backend files
+server.js
+.env.production
+ecosystem.config.js
+railway.yml
+
+# Ignore development files
+.env.local
+.env.development
+
+# Node modules and build artifacts
+node_modules
+.next
+out
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Misc
+.DS_Store
+*.tsbuildinfo
