@@ -4,6 +4,11 @@ import { useState } from 'react';
 
 export default function Home() {
   const [topic, setTopic] = useState('');
+  const [slideCount, setSlideCount] = useState(5);
+  const [presentationStyle, setPresentationStyle] = useState('professional');
+  const [audienceLevel, setAudienceLevel] = useState('general');
+  const [includeConclusion, setIncludeConclusion] = useState(true);
+  const [colorTheme, setColorTheme] = useState('blue');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -19,13 +24,40 @@ export default function Home() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/generate-ppt', {
+      console.log('Sending request with options:', {
+        topic: topic.trim(),
+        slideCount,
+        presentationStyle,
+        audienceLevel,
+        includeConclusion,
+        colorTheme
+      });
+      
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl) {
+        throw new Error('Backend URL not configured. Please check your environment variables.');
+      }
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
+      
+      const response = await fetch(`${backendUrl}/generate-ppt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ topic: topic.trim() }),
+        body: JSON.stringify({ 
+          topic: topic.trim(),
+          slideCount,
+          presentationStyle,
+          audienceLevel,
+          includeConclusion,
+          colorTheme
+        }),
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -33,11 +65,23 @@ export default function Home() {
       }
 
       // Handle file download
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        // Response is JSON (error), not a file
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Unknown server error');
+      }
+      
       const blob = await response.blob();
+      if (blob.size === 0) {
+        throw new Error('Empty file received from server');
+      }
+      
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `${topic.trim().replace(/[^a-zA-Z0-9]/g, '_')}_presentation.pptx`;
+      a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -47,7 +91,17 @@ export default function Home() {
       setTopic('');
     } catch (error) {
       console.error('Error generating presentation:', error);
-      setMessage(`Error: ${error.message}`);
+      
+      let errorMessage = 'Unknown error occurred';
+      if (error.name === 'AbortError') {
+        errorMessage = 'Request timed out. Please try again with a simpler topic.';
+      } else if (error.message.includes('fetch')) {
+        errorMessage = 'Cannot connect to server. Please check your internet connection.';
+      } else {
+        errorMessage = error.message;
+      }
+      
+      setMessage(`Error: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
@@ -86,6 +140,98 @@ export default function Home() {
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
                   disabled={isLoading}
                 />
+              </div>
+
+              {/* Customization Options */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    Number of Slides
+                  </label>
+                  <select
+                    value={slideCount}
+                    onChange={(e) => setSlideCount(Number(e.target.value))}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    disabled={isLoading}
+                  >
+                    <option value={3}>3 slides</option>
+                    <option value={5}>5 slides</option>
+                    <option value={7}>7 slides</option>
+                    <option value={10}>10 slides</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    Presentation Style
+                  </label>
+                  <select
+                    value={presentationStyle}
+                    onChange={(e) => setPresentationStyle(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    disabled={isLoading}
+                  >
+                    <option value="professional">Professional</option>
+                    <option value="casual">Casual</option>
+                    <option value="academic">Academic</option>
+                    <option value="creative">Creative</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    Audience Level
+                  </label>
+                  <select
+                    value={audienceLevel}
+                    onChange={(e) => setAudienceLevel(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    disabled={isLoading}
+                  >
+                    <option value="beginner">Beginner</option>
+                    <option value="general">General</option>
+                    <option value="expert">Expert</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    Color Theme
+                  </label>
+                  <select
+                    value={colorTheme}
+                    onChange={(e) => setColorTheme(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                    disabled={isLoading}
+                  >
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="purple">Purple</option>
+                    <option value="red">Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="teal">Teal</option>
+                    <option value="gray">Gray</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    Options
+                  </label>
+                  <div className="flex items-center space-x-3 mt-3">
+                    <input
+                      type="checkbox"
+                      id="conclusion"
+                      checked={includeConclusion}
+                      onChange={(e) => setIncludeConclusion(e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      disabled={isLoading}
+                    />
+                    <label htmlFor="conclusion" className="text-sm text-gray-700">
+                      Include conclusion slide
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <button

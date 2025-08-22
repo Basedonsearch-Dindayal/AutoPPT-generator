@@ -1,0 +1,10 @@
+version: 2
+build:
+  commands:
+    - npm install
+start:
+  command: node server.js
+healthcheck:
+  path: /health
+  timeout: 10s
+  interval: 30s

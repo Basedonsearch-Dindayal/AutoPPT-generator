@@ -6,9 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev:all": "concurrently \"npm run dev\" \"node server.js\"",
+    "start:backend": "NODE_ENV=production node server.js",
+    "start:production": "concurrently \"npm run start\" \"npm run start:backend\"",
+    "deploy:vercel": "vercel --prod",
+    "deploy:railway": "railway deploy"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^3.9.0",
     "@next/swc-wasm-nodejs": "13.5.1",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -45,15 +51,20 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "cors": "^2.8.5",
     "date-fns": "^3.6.0",
+    "dotenv": "^17.2.1",
     "embla-carousel-react": "^8.3.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.446.0",
-    "next": "13.5.1",
+    "next": "^15.5.0",
     "next-themes": "^0.3.0",
-    "postcss": "8.4.30",
+    "postcss": "^8.5.6",
     "pptxgenjs": "^4.0.1",
     "react": "18.2.0",
     "react-day-picker": "^8.10.1",
@@ -68,5 +79,8 @@
     "typescript": "5.2.2",
     "vaul": "^0.9.9",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
   }
 }

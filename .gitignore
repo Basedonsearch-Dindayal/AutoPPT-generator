@@ -8,6 +8,21 @@
 # testing
 /coverage
 
+# PM2 logs and ecosystem
+logs/
+*.log
+.pm2
+
+# Production files
+*.pptx
+test.pptx
+
+# Environment variables
+.env.production
+
+# Bolt artifacts
+.bolt/
+
 # next.js
 /.next/
 /out/
