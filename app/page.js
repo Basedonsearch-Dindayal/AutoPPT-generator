@@ -125,7 +125,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-2">Lightning Fast</h3>
-              <p className="text-sm text-gray-600">Generate presentations in seconds</p>
+              <p className="text-sm text-gray-600">Generate presentations instantly</p>
             </div>
 
             <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20">
@@ -135,7 +135,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-2">AI Powered</h3>
-              <p className="text-sm text-gray-600">Smart content generation</p>
+              <p className="text-sm text-gray-600">Intelligent content creation</p>
             </div>
 
             <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20">
@@ -145,7 +145,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-2">Professional</h3>
-              <p className="text-sm text-gray-600">Ready-to-use templates</p>
+              <p className="text-sm text-gray-600">Production-ready slides</p>
             </div>
           </div>
         </div>
