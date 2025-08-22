@@ -19,12 +19,23 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:3001',
+      'https://localhost:3000',
+      'https://localhost:3001',
       process.env.FRONTEND_URL
     ].filter(Boolean);
     
+    // Allow all Vercel domains temporarily
+    if (origin && (origin.includes('.vercel.app') || origin.includes('.vercel.com'))) {
+      return callback(null, true);
+    }
+    
+    // Check specific allowed origins
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin);
+      console.log('Allowed origins:', allowedOrigins);
+      console.log('Environment FRONTEND_URL:', process.env.FRONTEND_URL);
       callback(new Error('Not allowed by CORS'));
     }
   },
