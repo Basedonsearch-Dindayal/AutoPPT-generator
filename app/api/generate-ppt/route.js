@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import PptxGenJS from 'pptxgenjs';
 
 export async function POST(request) {
