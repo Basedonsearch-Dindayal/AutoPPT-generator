@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="url(#gradient)" stroke="#1e40af" stroke-width="1"/>
+  
+  <!-- Main presentation slide -->
+  <rect x="6" y="9" width="14" height="10" rx="1" fill="white" opacity="0.95"/>
+  
+  <!-- Slide content lines -->
+  <rect x="8" y="11" width="8" height="1" fill="#3b82f6" opacity="0.8"/>
+  <rect x="8" y="13" width="6" height="0.8" fill="#6b7280" opacity="0.6"/>
+  <rect x="8" y="15" width="7" height="0.8" fill="#6b7280" opacity="0.6"/>
+  
+  <!-- AI spark/magic element -->
+  <g transform="translate(18,8)">
+    <circle cx="0" cy="0" r="1.5" fill="#fbbf24"/>
+    <polygon points="0,-3 0.8,-0.8 3,0 0.8,0.8 0,3 -0.8,0.8 -3,0 -0.8,-0.8" fill="#fbbf24" opacity="0.8"/>
+  </g>
+  
+  <!-- Second slide (behind) for depth -->
+  <rect x="8" y="7" width="14" height="10" rx="1" fill="white" opacity="0.3"/>
+  
+  <!-- Small dots for additional slides -->
+  <circle cx="13" cy="23" r="0.8" fill="white" opacity="0.7"/>
+  <circle cx="16" cy="23" r="0.8" fill="white" opacity="0.7"/>
+  <circle cx="19" cy="23" r="0.8" fill="white" opacity="0.7"/>
+</svg>
